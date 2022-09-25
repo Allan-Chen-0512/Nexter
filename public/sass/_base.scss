@@ -1,0 +1,90 @@
+// COLOR VARIABLES
+$color-primary: #c69963;
+$color-primary-dark: #B28451;
+
+$color-secondary: #101d2c;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: #54483A;
+$color-grey-dark-2: #6D5D4B;
+
+// FONT VARIABLES
+$font-primary: 'Nunito', sans-serif;
+$font-display: 'Josefin Sans', sans-serif;
+
+
+
+// RESPONSIVE BREAKPOINTS
+$bp-largest: 75em;   // 75em = 1200px
+$bp-large: 62.5em;   // 1000px
+$bp-meduim: 50em;    // 800px
+$bp-small: 37.5em;   // 600px
+
+
+* , *::before , *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+
+
+    @media only screen and (max-width: $bp-largest){
+        font-size: 50%;
+    }
+}
+
+body{
+    font-family: $font-primary;
+    color: $color-grey-dark-2;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.container{
+
+    display: grid;
+    
+    // we can write auto/min-content they both adapt to the content (they basically mean the same thing)
+    grid-template-rows: 80vh min-content 40vw repeat(3, min-content);
+    
+                           // column width not responsive without @media if given fixed width 
+                           // full-start to full-end =  1fr + (repeat(8, minmax(min-content, 14rem)) + 1fr
+    grid-template-columns: [sidebar-start] 8rem [sidebar-end full-start]
+                           // fractional units never have width below its min-content
+                           minmax(6rem, 1fr) [center-start]
+                           // upon opening index.html on laptop , column widths = 14rem , and responds when screen size decreases ( goes below 14rem but never below min-content ) , (stays at highest width as possible)
+                           //                                                             !! (Notes from top line)(the 1fr columns will decrease first as much as posible, and then these 8 columns will decrease as much as possible to min-content width)
+                           //                                                             The 8rem column will never decrease (unless stated in @media)
+                           repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) 
+                          
+                           [center-end] minmax(6rem, 1fr) [full-end];
+
+
+    @media only screen and (max-width: $bp-large){                
+        // at this bp-large 1rem = 8px
+        grid-template-rows: 6rem 80vh min-content 40vw repeat(3, min-content);
+
+        grid-template-columns: [full-start] 
+                               minmax(6rem, 1fr) [center-start]
+                               repeat(8, [col-start] minmax(min-content, 14rem) [col-end]) 
+                               [center-end] minmax(6rem, 1fr) [full-end];
+        
+    }          
+    
+    
+    @media only screen and (max-width: $bp-meduim){                
+        grid-template-rows: 6rem calc(100vh - 6rem) min-content min-content min-content repeat(3, min-content);
+        //OR (same thing)
+        // grid-template-rows: 6rem calc(100vh - 6rem); 
+    } 
+
+    // shorthand for grid-template-rows and grid-template-columns
+    // grid-template: rows / columns;
+}

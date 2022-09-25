@@ -1,0 +1,49 @@
+.features{
+
+    // background-color: $color-grey-light-2; testing purposes
+    // You will notice that for most components we didnt explicitly specify the grid-row location , thats because the CSS algorithm already puts it in the place we want
+    // Our focus should be on the columns
+    grid-column: center-start / center-end;
+
+
+    
+
+    // google about sub-grids (coming in CSS grid specification 2?)
+    display: grid;
+    //grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    // we dont specify grid-template-rows cause css will create an implicit grid for us
+    grid-gap: 6rem;
+    // switch this on and off to see difference // the dafault value is strech
+    // causing some grid items to stretch.
+    align-items: start;
+
+
+    margin: 15rem 0;
+
+}
+
+.feature{
+
+
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-row-gap: 1.5rem;
+    grid-column-gap: 2.5rem;
+
+
+    &__icon{
+        fill: $color-primary;
+        width: 4.5rem;
+        height: 4.5rem;
+
+        // cant put 1/ -1 because -1 only works on explicit grids
+        grid-row: 1/ span 2;
+
+        transform: translateY(-1rem);
+    }
+
+    &__text{
+        font-size: 1.7rem;
+    }
+}
